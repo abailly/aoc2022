@@ -3,7 +3,9 @@
 256 Constant max-line
 Create line-buffer  max-line 2 + allot
 
-0 Variable empty-lines
+Variable empty-lines
+0 empty-lines !
+empty-lines @ .
 
 ( open file for input )
 : open-input ( addr u -- )  r/o open-file throw to fd-in ;
@@ -28,30 +30,22 @@ Create line-buffer  max-line 2 + allot
       k*x n -- k*x | i*x n )
     throw
   while
-    ( duplicate 2 elemets from stack )
-    2dup
-    ( put line-buffer value on stack )
-    line-buffer
-    ( push back result stack to data stack )
+    ( put line-buffer value on stack then swap
+    )
+    line-buffer swap
     s" "
     ( compare 2 strings, putting -1 +1 or 0 depending on theire respective
     lexicographic order
       c-addr1 u1 c-addr2 u2 -- n
     )
     compare
-    ( if top of stack is 0, put true flag on )
-    ( x -- )
     0=
     if
       1 empty-lines +!
+      empty-lines @ .
     endif
-until
-else
-  drop
-then
-    2drop
-    empty-lines
-    ;
+  repeat
+;
 
 : copy-file ( -- )
   begin
@@ -60,6 +54,6 @@ then
     line-buffer swap fd-out write-line throw
   repeat ;
 
-s" /Users/arnaud/projects/aoc2022/day1/input.txt" open-input
+s" /Users/arnaud/projects/aoc2022/day1/test.txt" open-input
 scan-file
 .
