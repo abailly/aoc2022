@@ -1,6 +1,8 @@
 import Data.Bifunctor (second)
 import Data.Char (isSpace)
+import Data.Foldable (find)
 import Data.List (groupBy, sort)
+import Data.Maybe (fromMaybe)
 import System.Environment (getArgs)
 
 main :: IO ()
@@ -14,15 +16,29 @@ score =
     sum . map (socreOfOne . second tail . break isSpace)
 
 data Outcome = Win | Draw | Lose
+    deriving (Eq)
 
 data Play = Rock | Paper | Scissors
+    deriving (Enum)
 
 socreOfOne :: ([Char], [Char]) -> Int
-socreOfOne (your, mine) =
-    valueOf (play mine) + case outcome (play your) (play mine) of
-        Win -> 6
-        Draw -> 3
-        Lose -> 0
+socreOfOne (your, result) =
+    let win = decode result
+        played = findPlay (play your) win
+     in valueOf played + case win of
+            Win -> 6
+            Draw -> 3
+            Lose -> 0
+
+findPlay :: Play -> Outcome -> Play
+findPlay opp result =
+    fromMaybe (error "invalid move") $ find (\mine -> outcome opp mine == result) $ enumFrom Rock
+
+decode :: [Char] -> Outcome
+decode "X" = Lose
+decode "Y" = Draw
+decode "Z" = Win
+decode other = error $ "Unknown outcome " ++ other
 
 outcome :: Play -> Play -> Outcome
 outcome Rock Paper = Win
