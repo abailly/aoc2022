@@ -1,0 +1,28 @@
+name:                aoc2022
+version:             0.1.0.0
+license:             BSD3
+author:              "Arnaud Bailly"
+maintainer:          "arnaud.oqube@gmail.com"
+copyright:           "2022 Arnaud Bailly"
+
+description:         AOC2022 exercices in Haskell and other languages
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- process
+
+default-extensions:
+- OverloadedStrings
+- DeriveGeneric
+- NamedFieldPuns
+
+executables:
+  aoc:
+    main: aoc.hs
+    other-modules: []
+    source-dirs: .
+    ghc-options:
+      - -Wall
+      - -Werror
+      - -fno-warn-orphans

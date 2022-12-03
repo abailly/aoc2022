@@ -16,10 +16,10 @@ score1 :: [String] -> Int
 score1 = sum . map (priority . findDuplicate)
 
 score2 :: [String] -> Int
-score2 = sum . map (priority . findTriplicate) . groupBy3
+score2 = sum . map (priority . findCommonChar) . groupBy3
 
-findTriplicate :: [String] -> Char
-findTriplicate = head . Set.toList . foldl1 Set.intersection . map Set.fromList
+findCommonChar :: [String] -> Char
+findCommonChar = head . Set.toList . foldl1 Set.intersection . map Set.fromList
 
 groupBy3 :: [String] -> [[String]]
 groupBy3 [] = []
@@ -36,7 +36,7 @@ findDuplicate :: String -> Char
 findDuplicate line =
     let len = length line
         (one, two) = splitAt (len `div` 2) line
-     in findMatch (sort one) (sort two)
+     in findCommonChar [one, two]
 
 findMatch :: [Char] -> [Char] -> Char
 findMatch (x : xs) (y : ys) = case compare x y of

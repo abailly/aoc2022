@@ -1,0 +1,29 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           aoc2022
+version:        0.1.0.0
+description:    AOC2022 exercices in Haskell and other languages
+author:         Arnaud Bailly
+maintainer:     arnaud.oqube@gmail.com
+copyright:      2022 Arnaud Bailly
+license:        BSD3
+build-type:     Simple
+
+executable aoc
+  main-is: aoc.hs
+  hs-source-dirs:
+      ./
+  default-extensions:
+      OverloadedStrings
+      DeriveGeneric
+      NamedFieldPuns
+  ghc-options: -Wall -Werror -fno-warn-orphans
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , process
+  default-language: Haskell2010
