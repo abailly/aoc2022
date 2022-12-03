@@ -19,16 +19,16 @@ include common.fs
     [char] Z of scissors endof
   endcase ;
 
-\ outcome of a pair of plays for player 2 (me)
+\ outcome of a pair of plays for player 1 (me)
 \ c1 and c2 must be one of rock, paper, scissors
 : outcome ( c1 c2 -- n )
   -
   case
-    -1 of win endof
-    1 of lose endof
+    1 of win endof
+    -1 of lose endof
     0 of draw endof
-    -2 of lose endof
-    2 of win endof
+    2 of lose endof
+    -2 of win endof
   endcase
 ;
 
@@ -37,11 +37,15 @@ include common.fs
   begin
     read-one-line
   while
-
+    drop
+    line-buffer dup
+    2 + c@ play dup rot \ my play, twice
+    c@ play  \ other play
+    outcome + + \ add outcome and my play
   repeat
 ;
 
-s" ./day2/test.txt" open-input
+next-arg open-input \ read file to open from command-line
 scan-file
-2drop .
+drop .
 bye
