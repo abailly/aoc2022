@@ -21,14 +21,14 @@ include common.fs
 
 \ outcome of a pair of plays for player 1 (me)
 \ c1 and c2 must be one of rock, paper, scissors
-: outcome ( c1 c2 -- n )
-  -
+: outcome { c1 c2 -- n }
+  c1 c2 -
   case
-    1 of win endof
+     1 of win  endof
     -1 of lose endof
-    0 of draw endof
-    2 of lose endof
-    -2 of win endof
+     0 of draw endof
+     2 of lose endof
+    -2 of win  endof
   endcase
 ;
 
