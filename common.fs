@@ -19,31 +19,3 @@ Create line-buffer  max-line 2 + allot
     this means the eof has been reached
     k*x n -- k*x | i*x n )
   throw ;
-
-: scan-file ( -- )
-  0 \ current max value
-  0 \ current value
-  begin
-    read-one-line
-  while
-    line-buffer swap \ put length on top for compare
-    2dup \ save string and len
-    s" " compare 0= \ is the string empty?
-    if
-      2drop \ drop saved string
-      2dup \ max and current value
-      s\" empty line\n" type
-      .s
-      <
-      if swap drop 0
-      else drop 0
-           endif \ compare current with max and replace
-    else
-      s>number? 2drop + \ add to current value
-      endif
-  repeat
-;
-
-s" /Users/arnaud/projects/aoc2022/day1/input.txt" open-input
-scan-file
-2drop .
