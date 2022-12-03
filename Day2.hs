@@ -1,3 +1,5 @@
+module Day2 where
+
 import Data.Bifunctor (second)
 import Data.Char (isSpace)
 import Data.Foldable (find)
@@ -5,9 +7,8 @@ import Data.List (groupBy, sort)
 import Data.Maybe (fromMaybe)
 import System.Environment (getArgs)
 
-main :: IO ()
-main = do
-    [file] <- getArgs
+day2 :: String -> IO ()
+day2 file = do
     input <- lines <$> readFile file
     print $ score input
 

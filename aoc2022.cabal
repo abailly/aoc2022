@@ -13,17 +13,40 @@ copyright:      2022 Arnaud Bailly
 license:        BSD3
 build-type:     Simple
 
-executable aoc
-  main-is: aoc.hs
+library
+  exposed-modules:
+      Day1
+      Day2
+      Day3
+      Day4
+  other-modules:
+      Paths_aoc2022
   hs-source-dirs:
       ./
   default-extensions:
       OverloadedStrings
       DeriveGeneric
       NamedFieldPuns
-  ghc-options: -Wall -Werror -fno-warn-orphans
   build-depends:
       base >=4.7 && <5
     , containers
+    , parsec
+    , process
+  default-language: Haskell2010
+
+executable aoc
+  main-is: aoc.hs
+  hs-source-dirs:
+      app
+  default-extensions:
+      OverloadedStrings
+      DeriveGeneric
+      NamedFieldPuns
+  ghc-options: -Wall -Werror -fno-warn-orphans
+  build-depends:
+      aoc2022
+    , base >=4.7 && <5
+    , containers
+    , parsec
     , process
   default-language: Haskell2010

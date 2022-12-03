@@ -10,6 +10,7 @@ description:         AOC2022 exercices in Haskell and other languages
 dependencies:
 - base >= 4.7 && < 5
 - containers
+- parsec
 - process
 
 default-extensions:
@@ -17,12 +18,17 @@ default-extensions:
 - DeriveGeneric
 - NamedFieldPuns
 
+library:
+  source-dirs:  '.'
+
 executables:
   aoc:
     main: aoc.hs
     other-modules: []
-    source-dirs: .
+    source-dirs: app
     ghc-options:
       - -Wall
       - -Werror
       - -fno-warn-orphans
+    dependencies:
+    - aoc2022

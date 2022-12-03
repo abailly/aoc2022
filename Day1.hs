@@ -1,9 +1,10 @@
+module Day1 where
+
 import Data.List (groupBy, sort)
 import System.Environment (getArgs)
 
-main :: IO ()
-main = do
-    [file] <- getArgs
+day1 :: String -> IO ()
+day1 file = do
     input <- lines <$> readFile file
     print $ maximumElf input
 
