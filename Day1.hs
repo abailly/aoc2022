@@ -1,8 +1,10 @@
 import Data.List (groupBy, sort)
+import System.Environment (getArgs)
 
 main :: IO ()
 main = do
-    input <- lines <$> readFile "input.txt"
+    [file] <- getArgs
+    input <- lines <$> readFile file
     print $ maximumElf input
 
 maximumElf :: [String] -> Int
