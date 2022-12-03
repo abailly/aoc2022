@@ -3,16 +3,29 @@ import Data.Char (isLower, isSpace)
 import Data.Foldable (find)
 import Data.List (groupBy, sort)
 import Data.Maybe (fromMaybe)
+import qualified Data.Set as Set
 import System.Environment (getArgs)
 
 main :: IO ()
 main = do
     [file] <- getArgs
     input <- lines <$> readFile file
-    print $ score input
+    print $ score2 input
 
-score :: [String] -> Int
-score = sum . map (priority . findDuplicate)
+score1 :: [String] -> Int
+score1 = sum . map (priority . findDuplicate)
+
+score2 :: [String] -> Int
+score2 = sum . map (priority . findTriplicate) . groupBy3
+
+findTriplicate :: [String] -> Char
+findTriplicate = head . Set.toList . foldl1 Set.intersection . map Set.fromList
+
+groupBy3 :: [String] -> [[String]]
+groupBy3 [] = []
+groupBy3 lines = first : groupBy3 rest
+  where
+    (first, rest) = splitAt 3 lines
 
 priority :: Char -> Int
 priority c
