@@ -24,7 +24,10 @@ score1 = length . filter overlaps . map parse
 
 overlaps :: (Interval, Interval) -> Bool
 overlaps ((x1, y1), (x2, y2)) =
-    (x2 >= x1 && y2 <= y1) || (x1 >= x2 && y1 <= y2)
+    (x1 >= x2 && x1 <= y2)
+        || (y1 >= x2 && y1 <= y2)
+        || (x2 >= x1 && x2 <= y1)
+        || (y2 >= x1 && y2 <= y1)
 
 type Interval = (Int, Int)
 
