@@ -1,5 +1,6 @@
 module Day3 where
 
+import Common (groupByN)
 import Data.Char (isLower)
 import qualified Data.Set as Set
 
@@ -12,16 +13,10 @@ score1 :: [String] -> Int
 score1 = sum . map (priority . findDuplicate)
 
 score2 :: [String] -> Int
-score2 = sum . map (priority . findCommonChar) . groupBy3
+score2 = sum . map (priority . findCommonChar) . groupByN 3
 
 findCommonChar :: [String] -> Char
 findCommonChar = head . Set.toList . foldl1 Set.intersection . map Set.fromList
-
-groupBy3 :: [String] -> [[String]]
-groupBy3 [] = []
-groupBy3 lns = first : groupBy3 rest
-  where
-    (first, rest) = splitAt 3 lns
 
 priority :: Char -> Int
 priority c

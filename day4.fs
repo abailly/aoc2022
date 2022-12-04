@@ -1,3 +1,5 @@
+#! /usr/bin/env gforth --
+
 require string.fs
 include common.fs
 
@@ -30,18 +32,22 @@ variable shifted
   compute-interval
 ;
 
-\ is the second range included in the first?
-: included (  lb1 ub1 lb2 ub2 -- flag )
+\ is the second range contains in the first?
+: contains (  lb1 ub1 lb2 ub2 -- flag )
   rot \ lb1 lb2 ub2 ub1
   <= -rot <= and
 ;
 
+: 4dup
+  2tuck 2swap 2tuck 2swap
+;
+
 \ tells whether one interval includes the other
 : includes ( lb1 ub1 lb2 ub2 -- flag )
-  2tuck 2swap 2tuck 2swap \ duplicate ranges
-  included
+  4dup \ duplicate ranges
+  contains
   4 shift
-  included
+  contains
   or
 ;
 
