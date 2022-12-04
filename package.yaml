@@ -20,6 +20,10 @@ default-extensions:
 
 library:
   source-dirs:  '.'
+  ghc-options:
+    - -Wall
+    - -Werror
+    - -fno-warn-orphans
 
 executables:
   aoc:

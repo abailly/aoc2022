@@ -3,9 +3,7 @@ module Day2 where
 import Data.Bifunctor (second)
 import Data.Char (isSpace)
 import Data.Foldable (find)
-import Data.List (groupBy, sort)
 import Data.Maybe (fromMaybe)
-import System.Environment (getArgs)
 
 day2 :: String -> IO ()
 day2 file = do
@@ -57,7 +55,7 @@ play "C" = Scissors
 play "X" = Rock
 play "Y" = Paper
 play "Z" = Scissors
-play play = error $ "unknown play " ++ play
+play p = error $ "unknown play " ++ p
 
 valueOf :: Play -> Int
 valueOf Rock = 1

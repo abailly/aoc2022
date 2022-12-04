@@ -1,12 +1,7 @@
 module Day3 where
 
-import Data.Bifunctor (second)
-import Data.Char (isLower, isSpace)
-import Data.Foldable (find)
-import Data.List (groupBy, sort)
-import Data.Maybe (fromMaybe)
+import Data.Char (isLower)
 import qualified Data.Set as Set
-import System.Environment (getArgs)
 
 day3 :: String -> IO ()
 day3 file = do
@@ -24,9 +19,9 @@ findCommonChar = head . Set.toList . foldl1 Set.intersection . map Set.fromList
 
 groupBy3 :: [String] -> [[String]]
 groupBy3 [] = []
-groupBy3 lines = first : groupBy3 rest
+groupBy3 lns = first : groupBy3 rest
   where
-    (first, rest) = splitAt 3 lines
+    (first, rest) = splitAt 3 lns
 
 priority :: Char -> Int
 priority c

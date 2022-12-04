@@ -1,7 +1,6 @@
 module Day1 where
 
-import Data.List (groupBy, sort)
-import System.Environment (getArgs)
+import Data.List (sort)
 
 day1 :: String -> IO ()
 day1 file = do
