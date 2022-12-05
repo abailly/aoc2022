@@ -5,8 +5,7 @@ module Day5 where
 import Common (groupByN)
 import Data.Char (isSpace)
 import Data.Functor (void)
-import Data.List (transpose)
-import Debug.Trace (trace)
+import Data.List (foldl', transpose)
 import Text.Parsec (runParser, space)
 import Text.Parsec.Char (string)
 import Text.Parsec.Language (haskellDef)
@@ -23,30 +22,27 @@ score1 inp =
     let (puzzleInput, movesInput) = break null inp
         puzzle = parsePuzzle puzzleInput
         moves = parseMoves $ tail movesInput
-     in trace (unlines puzzle) $ map head $ puzzle `apply` moves
+     in map head $ puzzle `apply` moves
 
 apply :: Puzzle -> [Move] -> Puzzle
-apply = foldl applyMove
+apply = foldl' applyMove
 
 applyMove :: Puzzle -> Move -> Puzzle
 applyMove puzzle m@(n, f, t) =
-    trace ("apply " <> show m <> " on " <> unlines puzzle) $
-        let (src, rest) = splitAt n $ puzzle !! (f - 1)
-            dest = reverse src <> puzzle !! (t - 1)
-            adjust (s, i)
-                | i == f = rest
-                | i == t = dest
-                | otherwise = s
-            result = zipWith (curry adjust) puzzle [1 ..]
-         in trace (unlines result) result
+    let (src, rest) = splitAt n $ puzzle !! (f - 1)
+        dest = src <> puzzle !! (t - 1)
+        adjust (s, i)
+            | i == f = rest
+            | i == t = dest
+            | otherwise = s
+     in zipWith (curry adjust) puzzle [1 ..]
 
 type Puzzle = [String]
 
 parsePuzzle :: [String] -> Puzzle
 parsePuzzle inp =
     let slices = map (equalise inp) inp
-        tCrates = map (filter (not . isSpace)) $ transpose $ map parseCrates slices
-     in trace (unlines slices) tCrates
+     in map (filter (not . isSpace)) $ transpose $ map parseCrates slices
 
 parseCrates :: String -> String
 parseCrates =
