@@ -28,7 +28,7 @@ apply :: Puzzle -> [Move] -> Puzzle
 apply = foldl' applyMove
 
 applyMove :: Puzzle -> Move -> Puzzle
-applyMove puzzle m@(n, f, t) =
+applyMove puzzle (n, f, t) =
     let (src, rest) = splitAt n $ puzzle !! (f - 1)
         dest = src <> puzzle !! (t - 1)
         adjust (s, i)
